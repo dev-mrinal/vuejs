@@ -69,7 +69,11 @@ export default {
     }
   },
   created () {
-    axios.get(`http://jsonplaceholder.typicode.com/posts`)
+    axios.get('http://jsonplaceholder.typicode.com/posts', {
+      params: {
+        id: 1
+      }
+    })
       .then(response => {
         // JSON responses are automatically parsed.
         this.posts = response.data
