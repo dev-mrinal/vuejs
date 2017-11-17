@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import About from '@/components/About'
-import Service from '@/components/Service'
+import Promotion from '@/components/Promotion'
 import Contact from '@/components/Contact'
 
 Vue.use(Router)
@@ -20,9 +20,9 @@ export default new Router({
       component: About
     },
     {
-      path: '/service',
-      name: 'service',
-      component: Service
+      path: '/promotion',
+      name: 'promotion',
+      component: Promotion
     },
     {
       path: '/contact',

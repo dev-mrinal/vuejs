@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <router-link to="/">Home</router-link>
     <router-link to="/about">About</router-link>
-    <router-link to="/service">Service</router-link>
+    <router-link to="/promotion">promotion</router-link>
     <router-link to="/contact">Contact</router-link>
     <router-view/>
   </div>
@@ -17,7 +17,6 @@ export default {
 <style>
 #app {
   margin: 0 auto;
-  width: 960px;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

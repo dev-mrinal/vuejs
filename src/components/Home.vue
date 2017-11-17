@@ -1,12 +1,12 @@
 <template>
-  <div class="app-wrapper">
-  <div>&nbsp;</div>
-  <h1>{{ msg }}</h1>
-  <div>Username: mrinal <br /> Password: mrinal</div>
+  <div>
+  <!--<b-img src="https://lorempixel.com/1024/400/" fluid alt="Responsive image" /> -->
+  <img src="../assets/images/bg.jpg" class="img-fluid" />
+  <h1>{{ msg | capitalize }}</h1>
   <div><input type="text" name="username" id="username" v-model="username" placeholder="Type Username" /></div>
   <div><input type="password" name="password" id="password" v-model="password" placeholder="Type Password" /></div>
   <div><button id="createAccount" v-on:click="postPost" >Login</button></div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ import _ from 'lodash'
 export default {
   name: 'Home',
   methods: {
-    postPost () {
+    postPost: function () {
       axios.post('https://jsonplaceholder.typicode.com/posts', {
         username: this.username,
         password: this.password,
@@ -53,15 +53,20 @@ export default {
       console.log('I get fired every two seconds!')
     }, 2000)
   },
-  data () {
+  data: function () {
     return {
-      msg: 'Welcome to Promolytics',
+      msg: 'welcome to promolytics',
       username: '',
       password: '',
       posts: [],
       postBody: '',
       errors: [],
       post: ''
+    }
+  },
+  filters: {
+    capitalize: function (str) {
+      return str.charAt(0).toUpperCase() + str.slice(1)
     }
   }
 }
