@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="entry in filteredData">
+      <tr v-for="entry in filteredData | paginate">
         <td v-for="key in columns">
           {{entry[key]}}
         </td>
@@ -21,16 +21,13 @@
     </tbody>
   </table>
 
-   <paginate
-    :page-count="3"
-    :page-range="1"
-    :margin-pages="2"
-    :click-handler="clickCallback"
-    :prev-text="'Prev'"
-    :next-text="'Next'"
-    :container-class="'pagination'"
-    :page-class="'page-item'">
-  </paginate>
+    <span @click="setPage(currentPage-1)">Prev</span>
+<ul>
+    <li v-for="pageNumber in totalPages" v-if="Math.abs(pageNumber - currentPage) < 3 || pageNumber == totalPages - 1 || pageNumber == 0">
+    <a href="#" @click="setPage(pageNumber)"  :class="{current: currentPage === pageNumber, last: (pageNumber == totalPages - 1 && Math.abs(pageNumber - currentPage) > 3), first:(pageNumber == 0 && Math.abs(pageNumber - currentPage) > 3)}">{{ pageNumber+1 }}</a>
+    </li>
+</ul>
+    <span @click="setPage(currentPage+1)">Next</span>
 
   </div>
 </template>
@@ -51,7 +48,10 @@ export default {
     })
     return {
       sortKey: '',
-      sortOrders: sortOrders
+      sortOrders: sortOrders,
+      currentPage: 0,
+      itemsPerPage: 2,
+      resultCount: 0
     }
   },
   computed: {
@@ -75,6 +75,9 @@ export default {
         })
       }
       return data
+    },
+    totalPages: function () {
+      return Math.ceil(this.resultCount / this.itemsPerPage)
     }
   },
   filters: {
@@ -87,6 +90,7 @@ export default {
       return str.charAt(0).toUpperCase() + str.slice(1)
     },
     paginate: function (list) {
+      console.log(list)
       this.resultCount = list.length
       if (this.currentPage >= this.totalPages) {
         this.currentPage = this.totalPages - 1
