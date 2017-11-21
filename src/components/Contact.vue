@@ -14,6 +14,7 @@ mmmm
     </li></ul>
 
 <span @click="setPage(currentPage+1)">Next</span>
+
 </div>
 </template>
 
@@ -52,7 +53,7 @@ export default {
         this.currentPage = this.totalPages - 1
       }
       var index = this.currentPage * this.itemsPerPage
-      console.log(index)
+      // console.log(index)
       if (index > -1) {
         return this.users.slice(index, index + this.itemsPerPage)
       }
@@ -60,7 +61,7 @@ export default {
   },
   methods: {
     setPage: function (pageNumber) {
-     // console.log(pageNumber)
+      console.log(pageNumber)
       this.currentPage = pageNumber
     }
   }

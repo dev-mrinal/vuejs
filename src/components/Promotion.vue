@@ -1,5 +1,6 @@
 <template>
   <div class="app-wrapper">
+
      <table>
     <thead>
       <tr>
@@ -13,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="entry in filteredData | paginate">
+      <tr v-for="entry in filteredData ">
         <td v-for="key in columns">
           {{entry[key]}}
         </td>
@@ -21,15 +22,17 @@
     </tbody>
   </table>
 
-    <span @click="setPage(currentPage-1)">Prev</span>
-<ul>
-    <li v-for="pageNumber in totalPages" v-if="Math.abs(pageNumber - currentPage) < 3 || pageNumber == totalPages - 1 || pageNumber == 0">
-    <a href="#" @click="setPage(pageNumber)"  :class="{current: currentPage === pageNumber, last: (pageNumber == totalPages - 1 && Math.abs(pageNumber - currentPage) > 3), first:(pageNumber == 0 && Math.abs(pageNumber - currentPage) > 3)}">{{ pageNumber+1 }}</a>
-    </li>
-</ul>
-    <span @click="setPage(currentPage+1)">Next</span>
 
-  </div>
+<!-- Pagination -->
+<br>
+<span @click="setPage(currentPage-1)">Prev</span>
+
+<ul><li v-for="pageNumber in totalPages" v-if="Math.abs(pageNumber - currentPage) < 3 || pageNumber == totalPages - 1 || pageNumber == 0"><a href="#" @click="setPage(pageNumber)"  :class="{current: currentPage === pageNumber, last: (pageNumber == totalPages - 1 && Math.abs(pageNumber - currentPage) > 3), first:(pageNumber == 0 && Math.abs(pageNumber - currentPage) > 3)}">{{ (pageNumber-1)+1 }}</a>
+    </li></ul>
+
+<span @click="setPage(currentPage+1)">Next</span>
+
+</div>
 </template>
 
 <script>
@@ -50,11 +53,15 @@ export default {
       sortKey: '',
       sortOrders: sortOrders,
       currentPage: 0,
-      itemsPerPage: 2,
+      itemsPerPage: 5,
       resultCount: 0
     }
   },
   computed: {
+    totalPages: function () {
+      console.log(Math.ceil(this.resultCount / this.itemsPerPage))
+      return Math.ceil(this.resultCount / this.itemsPerPage)
+    },
     filteredData: function () {
       var sortKey = this.sortKey
       var filterKey = this.filterKey && this.filterKey.toLowerCase()
@@ -74,10 +81,13 @@ export default {
           return (a === b ? 0 : a > b ? 1 : -1) * order
         })
       }
-      return data
-    },
-    totalPages: function () {
-      return Math.ceil(this.resultCount / this.itemsPerPage)
+      this.resultCount = data.length
+      if (this.currentPage >= this.totalPages) {
+        this.currentPage = this.totalPages - 1
+      }
+      var index = this.currentPage * this.itemsPerPage
+      return data.slice(index, index + this.itemsPerPage)
+      // return data
     }
   },
   filters: {
@@ -88,15 +98,6 @@ export default {
         str = 'Client Ref'
       }
       return str.charAt(0).toUpperCase() + str.slice(1)
-    },
-    paginate: function (list) {
-      console.log(list)
-      this.resultCount = list.length
-      if (this.currentPage >= this.totalPages) {
-        this.currentPage = this.totalPages - 1
-      }
-      var index = this.currentPage * this.itemsPerPage
-      return list.slice(index, index + this.itemsPerPage)
     }
   },
   methods: {
@@ -104,8 +105,13 @@ export default {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
-    clickCallback: function (pageNum) {
-      console.log(pageNum)
+    setPage: function (pageNumber) {
+      console.log(pageNumber)
+      if (pageNumber > -1) {
+        this.currentPage = pageNumber
+      } else {
+        this.currentPage = 1
+      }
     }
   }
 }
@@ -170,6 +176,29 @@ th.active .arrow {
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-top: 4px solid #fff;
+}
+
+a {
+  color: #999;
+}
+.current {
+  color: red;
+}
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+li {
+  display: inline;
+  margin: 5px 5px;
+}
+
+a.first::after {
+  content:'...'
+}
+
+a.last::before {
+  content:'...'
 }
 
 </style>

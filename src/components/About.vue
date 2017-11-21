@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     checkAuth: function () {
-      console.log(sessionStorage.username)
+      // console.log(sessionStorage.username)
       if (sessionStorage.username === undefined && sessionStorage.password === undefined) {
         console.log('test')
         location.href = '#/'
@@ -71,16 +71,16 @@ export default {
             { id: '1', promotionName: 'promotion A', clientRef: '2323', retailer: 'Cocacola', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
             { id: '2', promotionName: 'promotion B', clientRef: '75574', retailer: 'Wallmart', products: 'Product B', startDate: '22-12-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
             { id: '3', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '4', promotionName: 'promotion D', clientRef: '584834', retailer: 'Big Bazaar', products: 'Product C', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' }, { id: '1', promotionName: 'promotion A', clientRef: 'CDFGHJH', retailer: 'Cocacola', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '2', promotionName: 'promotion E', clientRef: '21210', retailer: 'Wallmart', products: 'Product D', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '3', promotionName: 'promotion F', clientRef: '7348374', retailer: 'P&G', products: 'Product E', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '4', promotionName: 'promotion G', clientRef: '348732', retailer: 'Big Bazaar', products: 'Product F', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' }, { id: '1', promotionName: 'promotion A', clientRef: 'CDFGHJH', retailer: 'Cocacola', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '2', promotionName: 'promotion H', clientRef: '48124', retailer: 'Wallmart', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '3', promotionName: 'promotion I', clientRef: '023921', retailer: 'P&G', products: 'Product G', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '4', promotionName: 'promotion J', clientRef: '45623', retailer: 'Big Bazaar', products: 'Product H', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' }, { id: '1', promotionName: 'promotion A', clientRef: 'CDFGHJH', retailer: 'Cocacola', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '2', promotionName: 'promotion K', clientRef: '347328', retailer: 'Wallmart', products: 'Product I', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '3', promotionName: 'promotion L', clientRef: '346346', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
-            { id: '4', promotionName: 'promotion M', clientRef: '36229329', retailer: 'Big Bazaar', products: 'Product J', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' }
+            { id: '4', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '5', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '6', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '7', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '8', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '9', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '10', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '11', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '12', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
+            { id: '13', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' }
       ],
       posts: [],
       errors: [],
