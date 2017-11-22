@@ -1,41 +1,30 @@
 <template>
- <!-- <div>
-  <h1>{{ msg | capitalize }}</h1>
-  <div><input type="text" name="username" id="username" v-model="username" placeholder="Type Username" /></div>
-  <div><input type="password" name="password" id="password" v-model="password" placeholder="Type Password" /></div>
-  <div><button id="createAccount" v-on:click="postPost" >Login</button></div>
-  <div><label><input type="checkbox" value=""> Remember Me. </label></div>
-</div> -->
 
+<div class="jumbotron" >
 
-<div class="jumbotron"  >
+ <form @submit.prevent="validateBeforeSubmit" v-if="!formSubmitted">
 
             <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <h2>Please Login</h2>
+                <div class="col-md-12">
+                    <h2>{{ msg | capitalize }}</h2>
                     <hr>
                 </div>
             </div>
 
 
-
             <div class="row">
-                    
-                    <div class="form-group has-danger">
+                    <div class="form-group has-danger"  :class="{'has-error': errors.has('email') }">
                         <label class="sr-only" for="email">E-Mail Address</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                            <input type="text" name="email" class="form-control" id="email"
-                                   placeholder="you@example.com" required autofocus>
+                            <input type="text" name="email" id="email" v-model="email" v-validate.initial="email" data-rules="required|email"  class="form-control"
+                                   placeholder="Email" required autofocus>
                     </div>
                     </div>
-
-
-                  <div class="col-md-12">
+                  <div class="col-md-12" v-if="errors.has('email')">
                     <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                            <i class="fa fa-close"></i> Example error message
+                            <i class="fa fa-close"></i> {{ errors.first('email') }}
                         </span>
                     </div>
                   </div>
@@ -44,77 +33,87 @@
 
 
             <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label class="sr-only" for="password">Password</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                            <input type="password" name="password" class="form-control" id="password"
+                            <input type="password" name="password" id="password" v-model="password" class="form-control"
                                    placeholder="Password" required>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
+
+                  <div class="col-md-12">
                     <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                        <!-- Put password error message here -->    
+                            <i class="fa fa-close"></i> Password is incorrect
                         </span>
                     </div>
-                </div>
+                  </div>
             </div>
+      
+      
             <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6" style="padding-top: .35rem">
                     <div class="form-check mb-2 mr-sm-2 mb-sm-0">
-                        <label class="form-check-label">
+                        <label class="form-check-label" style="padding-left: 0;">
                             <input class="form-check-input" name="remember"
                                    type="checkbox" >
-                            <span style="padding-bottom: .15rem">Remember me</span>
+                            <span style="padding-bottom: 0.15rem;padding-left: 20px;">Remember me</span>
                         </label>
                     </div>
-                </div>
             </div>
-            <div class="row" style="padding-top: 1rem">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
+      
+      
+            <div class="row" style="padding-top: 1rem;margin-left: -27px;">
+                <div class="col-md-12">
                     <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
                     <a class="btn btn-link" href="/password/reset">Forgot Your Password?</a>
                 </div>
             </div>
-        </div>
+
+    </form>        
+      
+    </div>
 
 </template>
 
+
 <script>
 // import '../assets/scss/global.scss'
-import axios from 'axios'
+// import axios from 'axios'
 import _ from 'lodash'
 
 export default {
   name: 'Login',
   methods: {
+    validateBeforeSubmit (e) {
+      this.$validator.validateAll()
+      if (!this.errors.any()) {
+        this.postPost()
+      }
+    },
     postPost: function () {
+      this.formSubmitted = true
+      /*
       axios.post('https://jsonplaceholder.typicode.com/posts', {
-        username: this.username,
+        email: this.email,
         password: this.password,
         body: this.postBody
       })
     .then(response => {
-      console.log(response.data.username)
+      console.log(response.data.email)
       console.log(response.data.password)
-      if (response.data.username === 'mrinal' && response.data.password === 'mrinal') {
+      if (response.data.email === 'mrinal' && response.data.password === 'mrinal') {
         console.log('success')
-        sessionStorage.username = response.data.username
+        sessionStorage.email = response.data.email
         sessionStorage.password = response.data.password
         location.href = '#/about'
       } else {
-        alert('Enter Username and Password')
+        alert('Enter Email and Password')
       }
     })
     .catch(e => {
       this.errors.push(e)
-    })
+    }) */
 
     // async / await version (postPost() becomes async postPost())
     //
@@ -132,8 +131,9 @@ export default {
   },
   data: function () {
     return {
-      msg: 'welcome to promolytics',
-      username: '',
+      formSubmitted: false,
+      msg: 'Promolytics Login',
+      email: '',
       password: '',
       posts: [],
       postBody: '',
@@ -151,16 +151,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-$main-bg-color: #FFF;
-.app-wrapper {
-    width: 1024px;
-    height: 768px;
-    background: $main-bg-color;
-}
-h1, h2 {
-  font-weight: normal;
-}
-
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #787878;
 }
@@ -192,11 +182,36 @@ button {
 }
 
 .jumbotron {
-  width: 450px;
+  width: 28.125em;
   position: absolute;
   top: 50%;
   left:50%;
   transform: translate(-50%,-50%);
-  border: 1px dashed deeppink;
+  background: #EDF0F3;
+  border: 1px solid #b3b1b1;
+  border-radius: 0.313em;
+  box-shadow: 0.188em 0.188em 0.313em #888888;
+}
+
+
+.mr-sm-2, .mx-sm-2 {
+    margin-right: 9.5rem !important;
+}
+
+
+@media screen and (max-width: 36em) {
+    .jumbotron {
+      position: static !important;
+      top: none !important;
+      left: none !important;
+      transform: none !important;
+      width: 100%;
+      float: left;
+    }
+
+   .fixed-bottom {
+     position: static !important;
+   }
+
 }
 </style>

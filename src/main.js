@@ -7,13 +7,14 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'font-awesome/css/font-awesome.css'
+import VeeValidate from 'vee-validate'
+Vue.use(VeeValidate)
 // import Paginate from 'vuejs-paginate'
 // require('../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss')
 // require('../node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js')
 // Vue.component('paginate', Paginate)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
