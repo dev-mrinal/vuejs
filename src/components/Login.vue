@@ -2,7 +2,7 @@
 
 <div class="jumbotron" >
 
- <form @submit.prevent="validateBeforeSubmit" v-if="!formSubmitted">
+      <form @submit.prevent="validateBeforeSubmit">
 
             <div class="row">
                 <div class="col-md-12">
@@ -13,27 +13,26 @@
 
 
             <div class="row">
-                    <div class="form-group has-danger"  :class="{'has-error': errors.has('email') }">
+                    <div class="form-group"  v-bind:class="{ 'has-warning': attemptSubmit && missingEmail }">
                         <label class="sr-only" for="email">E-Mail Address</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                            <input type="text" name="email" id="email" v-model="email" v-validate.initial="email" data-rules="required|email"  class="form-control"
+                            <input type="text" name="email" id="email" v-model="email" class="form-control"
                                    placeholder="Email" required autofocus>
                     </div>
                     </div>
-                  <div class="col-md-12" v-if="errors.has('email')">
+                  <div class="col-md-12" v-if="attemptSubmit && missingEmail">
                     <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                            <i class="fa fa-close"></i> {{ errors.first('email') }}
+                            <i class="fa fa-close"></i> Enter your email
                         </span>
                     </div>
-                  </div>
+                  </div>  
             </div>
 
 
-
             <div class="row">
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="{ 'has-warning': attemptSubmit && missingPassword }">
                         <label class="sr-only" for="password">Password</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
@@ -42,10 +41,10 @@
                         </div>
                     </div>
 
-                  <div class="col-md-12">
+                  <div class="col-md-12" v-if="attemptSubmit && missingPassword">
                     <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                            <i class="fa fa-close"></i> Password is incorrect
+                            <i class="fa fa-close"></i> Enter your password
                         </span>
                     </div>
                   </div>
@@ -65,7 +64,7 @@
       
             <div class="row" style="padding-top: 1rem;margin-left: -27px;">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
+                    <button type="submit" class="btn btn-success" v-on:click="validateBeforeSubmit"><i class="fa fa-sign-in"></i> Login</button>
                     <a class="btn btn-link" href="/password/reset">Forgot Your Password?</a>
                 </div>
             </div>
@@ -79,59 +78,18 @@
 
 <script>
 // import '../assets/scss/global.scss'
-// import axios from 'axios'
-import _ from 'lodash'
+import axios from 'axios'
+// import _ from 'lodash'
+// axios.defaults.headers.common['Accept'] = 'application/json, text/plain, */*'
+// axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin'
+// axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
+axios.options.xhr = { withCredentials: true }
 
 export default {
   name: 'Login',
-  methods: {
-    validateBeforeSubmit (e) {
-      this.$validator.validateAll()
-      if (!this.errors.any()) {
-        this.postPost()
-      }
-    },
-    postPost: function () {
-      this.formSubmitted = true
-      /*
-      axios.post('https://jsonplaceholder.typicode.com/posts', {
-        email: this.email,
-        password: this.password,
-        body: this.postBody
-      })
-    .then(response => {
-      console.log(response.data.email)
-      console.log(response.data.password)
-      if (response.data.email === 'mrinal' && response.data.password === 'mrinal') {
-        console.log('success')
-        sessionStorage.email = response.data.email
-        sessionStorage.password = response.data.password
-        location.href = '#/about'
-      } else {
-        alert('Enter Email and Password')
-      }
-    })
-    .catch(e => {
-      this.errors.push(e)
-    }) */
-
-    // async / await version (postPost() becomes async postPost())
-    //
-    // try {
-    //   await axios.post(`http://jsonplaceholder.typicode.com/posts`, {
-    //     body: this.postBody
-    //   })
-    // } catch (e) {
-    //   this.errors.push(e)
-    // }
-    },
-    throttledMethod: _.debounce(() => {
-      console.log('I get fired every two seconds!')
-    }, 2000)
-  },
   data: function () {
     return {
-      formSubmitted: false,
+      attemptSubmit: false,
       msg: 'Promolytics Login',
       email: '',
       password: '',
@@ -139,6 +97,59 @@ export default {
       postBody: '',
       errors: [],
       post: ''
+    }
+  },
+  computed: {
+    missingEmail: function () { return this.email === '' },
+    missingPassword: function () { return this.password === '' }
+  },
+  methods: {
+    validateBeforeSubmit: function (event) {
+      console.log(this.missingName)
+      this.attemptSubmit = true
+      if (this.missingEmail || this.missingPassword) {
+        event.preventDefault()
+      } else {
+        console.log('test...')
+        this.attemptSubmit = false
+        this.postPost()
+      }
+    },
+    postPost: function () {
+      // console.log('mrinal')
+      // this.formSubmitted = true
+      axios({
+        method: 'post',
+        url: 'http://engv2hfssoqa1.eng.rsicorp.local:7901/sso/json/authenticate',
+        headers: {
+          'X-OpenAM-Username': this.email,
+          'X-OpenAM-Password': this.password,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Access-Control-Max-Age': true
+        }
+      })
+    .then(response => {
+      // debugger
+      console.log(response)
+      console.log(response.data.password)
+      if (response.data.email === 'mrinal.mondal@retailsolutions.com' && response.data.password === '12345678') {
+        console.log('success')
+        sessionStorage.email = response.data.email
+        sessionStorage.password = response.data.password
+        location.href = '#/about'
+      } else {
+        console.log('xxxx')
+        // this.attemptSubmit = true
+        // this.missingPassword = false
+        if (this.missingEmail || this.missingPassword) {
+          event.preventDefault()
+        }
+        // alert('Enter Email and Password')
+      }
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
     }
   },
   filters: {
@@ -191,6 +202,14 @@ button {
   border: 1px solid #b3b1b1;
   border-radius: 0.313em;
   box-shadow: 0.188em 0.188em 0.313em #888888;
+}
+
+.control.has-icon.has-icon-right .input {
+    padding-right: 32px;
+}
+
+.input.is-danger, .textarea.is-danger {
+    border-color: #ff3860;
 }
 
 
