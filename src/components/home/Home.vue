@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import Promotion from '@/components/Promotion'
-import '../assets/scss/global.scss'
+import Promotion from '@/components/promotionList/Promotion'
+import '../../assets/scss/global.scss'
 import axios from 'axios'
 export default {
-  name: 'About',
+  name: 'Home',
   components: {
     'promotion': Promotion
   },
@@ -93,6 +93,7 @@ export default {
     }
   },
   created () {
+    // $("#test1").text("Hello world!");
     this.checkAuth()
     axios.get('https://jsonplaceholder.typicode.com/posts')
       .then(response => {

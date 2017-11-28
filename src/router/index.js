@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import Home from '@/components/Home'
-import About from '@/components/About'
-import Promotion from '@/components/Promotion'
-import Contact from '@/components/Contact'
+import Login from '@/components/login/Login'
+import Home from '@/components/home/Home'
+import CreatePromotion from '@/components/home/CreatePromotion'
+import AddPromotionDetails from '@/components/promotionWizard/AddPromotionDetails'
+import AddProductDetails from '@/components/promotionWizard/AddProductDetails'
 
 Vue.use(Router)
 
@@ -21,19 +21,25 @@ export default new Router({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About
-    },
-    {
-      path: '/promotion',
-      name: 'promotion',
-      component: Promotion
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: Contact
+      path: '/createpromotion',
+      name: 'createpromotion',
+      component: CreatePromotion,
+      children: [
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: '/',
+          name: 'promotiondetails',
+          component: AddPromotionDetails
+        },
+        {
+          // UserPosts will be rendered inside User's <router-view>
+          // when /user/:id/posts is matched
+          path: '/promotionproducts',
+          name: 'promotionproducts',
+          component: AddProductDetails
+        }
+      ]
     }
   ]
 })

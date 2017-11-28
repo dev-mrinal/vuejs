@@ -7,10 +7,8 @@
   </header>
 
   <nav v-if="['login'].indexOf($route.name) == -1">
-    <router-link to="/">Home</router-link>
-    <router-link to="/about">About</router-link>
-    <router-link to="/promotion">promotion</router-link>
-    <router-link to="/contact">Contact</router-link>
+    <router-link to="/home">Home</router-link>
+    <router-link to="/createpromotion">Create Promotion</router-link>
   </nav>
   
   <main>
@@ -46,7 +44,6 @@ export default {
   height: 2.5em;
   background: #eee;
 }
-
 
 
 @media screen and (max-width: 36em) {

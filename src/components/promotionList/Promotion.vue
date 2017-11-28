@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import '../assets/scss/global.scss'
+import '../../assets/scss/global.scss'
 export default {
   name: 'Promotion',
   props: {

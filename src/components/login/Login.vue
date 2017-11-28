@@ -69,7 +69,10 @@
                 </div>
             </div>
 
-    </form>        
+    </form> 
+
+
+    <div id="demo">Demo</div>       
       
     </div>
 
@@ -77,13 +80,13 @@
 
 
 <script>
-// import '../assets/scss/global.scss'
+// import '../../assets/scss/global.scss'
 import axios from 'axios'
 // import _ from 'lodash'
 // axios.defaults.headers.common['Accept'] = 'application/json, text/plain, */*'
 // axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin'
 // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
-axios.options.xhr = { withCredentials: true }
+// axios.options.xhr = { withCredentials: true }
 
 export default {
   name: 'Login',
@@ -105,7 +108,8 @@ export default {
   },
   methods: {
     validateBeforeSubmit: function (event) {
-      console.log(this.missingName)
+      // $('#demo').hide()
+      // console.log(this.missingName)
       this.attemptSubmit = true
       if (this.missingEmail || this.missingPassword) {
         event.preventDefault()
@@ -118,25 +122,23 @@ export default {
     postPost: function () {
       // console.log('mrinal')
       // this.formSubmitted = true
-      axios({
-        method: 'post',
-        url: 'http://engv2hfssoqa1.eng.rsicorp.local:7901/sso/json/authenticate',
-        headers: {
-          'X-OpenAM-Username': this.email,
-          'X-OpenAM-Password': this.password,
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Access-Control-Max-Age': true
-        }
-      })
+      axios.get('http://sunny-vdi.rsicorp.local:8080/promolytics/loginUser', {
+        'username': this.email,
+        'password': this.password
+      },
+        {
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' }
+        })
     .then(response => {
       // debugger
       console.log(response)
-      console.log(response.data.password)
-      if (response.data.email === 'mrinal.mondal@retailsolutions.com' && response.data.password === '12345678') {
+      // console.log(response.data.tokenId + '<br>')
+      // console.log(response.data.valid)
+      if (response.data.tokenId != null && response.data.valid === true) {
         console.log('success')
         sessionStorage.email = response.data.email
         sessionStorage.password = response.data.password
-        location.href = '#/about'
+        location.href = '#/home'
       } else {
         console.log('xxxx')
         // this.attemptSubmit = true
@@ -144,11 +146,12 @@ export default {
         if (this.missingEmail || this.missingPassword) {
           event.preventDefault()
         }
-        // alert('Enter Email and Password')
+        alert('Wrong username and Password')
       }
     })
     .catch(e => {
       this.errors.push(e)
+      console.log(this.errors)
     })
     }
   },
