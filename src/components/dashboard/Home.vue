@@ -33,9 +33,6 @@
     :filter-key="searchQuery" >
 </promotion>
 
-
-
-
   </div>
 </template>
 

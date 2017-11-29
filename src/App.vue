@@ -8,7 +8,7 @@
 
   <nav v-if="['login'].indexOf($route.name) == -1">
     <router-link to="/home">Home</router-link>
-    <router-link to="/createpromotion">Create Promotion</router-link>
+    <router-link to="/promotiondetails">Create Promotion</router-link>
   </nav>
   
   <main>

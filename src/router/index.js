@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login/Login'
-import Home from '@/components/home/Home'
-import CreatePromotion from '@/components/home/CreatePromotion'
+import Home from '@/components/dashboard/Home'
+import CreatePromotion from '@/components/dashboard/CreatePromotion'
 import AddPromotionDetails from '@/components/promotionWizard/AddPromotionDetails'
 import AddProductDetails from '@/components/promotionWizard/AddProductDetails'
 
@@ -21,8 +21,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/createpromotion',
-      name: 'createpromotion',
+      path: '/promotiondetails',
       component: CreatePromotion,
       children: [
         {

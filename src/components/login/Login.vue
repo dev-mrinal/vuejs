@@ -116,19 +116,16 @@ export default {
       } else {
         console.log('test...')
         this.attemptSubmit = false
-        this.postPost()
+        this.loginAuth()
       }
     },
-    postPost: function () {
+    loginAuth: function () {
       // console.log('mrinal')
       // this.formSubmitted = true
-      axios.get('http://sunny-vdi.rsicorp.local:8080/promolytics/loginUser', {
+      axios.post('http://sunny-vdi.rsicorp.local:8080/promolytics/loginUser', {
         'username': this.email,
         'password': this.password
-      },
-        {
-          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' }
-        })
+      })
     .then(response => {
       // debugger
       console.log(response)

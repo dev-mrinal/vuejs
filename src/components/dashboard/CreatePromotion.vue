@@ -4,12 +4,12 @@
    <br>
 
   <ul>
-    <li> <router-link to="/createpromotion">Promotion Details</router-link> </li>
-    <li> <router-link to="/promotionproducts">Products</router-link> </li>
+  <li> <router-link to="/promotiondetails">Promotion Details</router-link> </li>
+  <li> <router-link to="/promotionproducts">Products</router-link> </li>
   </ul>
   
  
-    <router-view/>
+ <router-view/>
   
 
   </div>
@@ -22,7 +22,7 @@ export default {
   data: function () {
     return {
       attemptSubmit: false,
-      msg: 'Promolytics Login',
+      msg: 'Create promotion',
       email: '',
       password: '',
       posts: [],
