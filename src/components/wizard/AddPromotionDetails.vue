@@ -112,7 +112,7 @@ export default {
       sessionStorage.setItem('savePromoDetails', JSON.stringify(promoDetails))
       var getPromoDetails = JSON.parse(sessionStorage.savePromoDetails)
       console.log(getPromoDetails)
-      // location.href = '#/promotionproducts'
+      location.href = '#/promotionproducts'
     }
   },
   created () {

@@ -30,7 +30,8 @@
 <promotion  
     :data="gridData"
     :columns="gridColumns"
-    :filter-key="searchQuery" >
+    :filter-key="searchQuery"
+    :page-item="itemsPerPage" >
 </promotion>
 
   </div>
@@ -79,6 +80,7 @@ export default {
             { id: '12', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' },
             { id: '13', promotionName: 'promotion C', clientRef: '6767', retailer: 'P&G', products: 'Product A', startDate: '22-10-2017', endDate: '22-12-2017', status: 'Retailer Forcast' }
       ],
+      itemsPerPage: 5,
       posts: [],
       errors: [],
       todos: [
