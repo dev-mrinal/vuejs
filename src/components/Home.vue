@@ -1,3 +1,4 @@
+
 <template>
   <div>
   <!--<b-img src="https://lorempixel.com/1024/400/" fluid alt="Responsive image" /> -->
@@ -6,17 +7,28 @@
   <div><input type="text" name="username" id="username" v-model="username" placeholder="Type Username" /></div>
   <div><input type="password" name="password" id="password" v-model="password" placeholder="Type Password" /></div>
   <div><button id="createAccount" v-on:click="postPost" >Login</button></div>
+  <div>{{count}} - {{counts}}</div>
+  <div><button v-on:click="increment">Increment</button></div>
+  <div><button v-on:click="increments">Increments</button></div>
 </div>
 </template>
+
 
 <script>
 import '../assets/scss/global.scss'
 import axios from 'axios'
 import _ from 'lodash'
+import store from './store/store'
 
 export default {
   name: 'Home',
   methods: {
+    increment: function () {
+      return store.commit('increment')
+    },
+    increments: function () {
+      return store.commit('increments')
+    },
     postPost: function () {
       axios.post('https://jsonplaceholder.typicode.com/posts', {
         username: this.username,
@@ -55,13 +67,21 @@ export default {
   },
   data: function () {
     return {
-      msg: 'welcome to promolytics',
+      msg: '',
       username: '',
       password: '',
       posts: [],
       postBody: '',
       errors: [],
       post: ''
+    }
+  },
+  computed: {
+    counts: function () {
+      return store.state.home.count
+    },
+    count: function () {
+      return store.state.login.count
     }
   },
   filters: {
